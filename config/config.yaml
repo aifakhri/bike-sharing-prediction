@@ -1,5 +1,5 @@
 # Related Path
-dataset_path: "data/raw/bikeshare_data.csv"
+dataset_path: "data/raw/"
 dataset_cleaned_path: "data/processed/raw_dataset.pkl"
 train_set_path:
   - "data/processed/x_train.pkl"
@@ -26,6 +26,7 @@ ohe_weathersit: "models/ohe_weathersit.pkl"
 ohe_weekday: "models/ohe_weekday.pkl"
 print_debug: true
 
+# Features/Columns Configuration
 # Column by data type
 float_columns:
   - "temp"
@@ -82,6 +83,15 @@ ohe_predictors:
   - "weekday"
   - "season"
   - "weathersit"
+
+# Unnecessary Predcitors
+unnecessary_predictors:
+  - "casual"
+  - "registered"
+  - "instant"
+
+# Dropped predictors due to feature issue
+should_not_use_predictors: "atemp"
 
 # Categirical variable range
 range_weekday:
