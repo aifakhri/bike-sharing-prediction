@@ -1,0 +1,124 @@
+# Related Path
+dataset_path: "data/raw/bikeshare_data.csv"
+dataset_cleaned_path: "data/processed/raw_dataset.pkl"
+train_set_path:
+  - "data/processed/x_train.pkl"
+  - "data/processed/y_train.pkl"
+valid_set_path:
+  - "data/processed/x_valid.pkl"
+  - "data/processed/y_valid.pkl"
+test_set_path:
+  - "data/processed/x_test.pkl"
+  - "data/processed/y_test.pkl"
+train_feng_set_path:
+  - "data/processed/x_train_feng.pkl"
+  - "data/processed/y_train_feng.pkl"
+valid_feng_set_path:
+  - "data/processed/x_valid_feng.pkl"
+  - "data/processed/y_valid_feng.pkl"
+test_feng_set_path:
+  - "data/processed/x_test_feng.pkl"
+  - "data/processed/y_test_feng.pkl"
+production_model_path: "models/production_model.pkl"
+training_log_path: "log/training_log.json"
+ohe_season: "models/ohe_season.pkl"
+ohe_weathersit: "models/ohe_weathersit.pkl"
+ohe_weekday: "models/ohe_weekday.pkl"
+print_debug: true
+
+# Column by data type
+float_columns:
+  - "temp"
+  - "atemp"
+  - "hum"
+  - "windspeed"
+int_columns:
+  - "dteday"
+  - "instant"
+  - "season"
+  - "yr"
+  - "mnth"
+  - "hr"
+  - "holiday"
+  - "weekday"
+  - "workingday"
+  - "weathersit"
+  - "cnt"
+
+# Predictors and label related
+label: "cnt"
+predictors:
+  - "dteday"
+  - "season"
+  - "yr"
+  - "mnth"
+  - "hr"
+  - "holiday"
+  - "weekday"
+  - "workingday"
+  - "weathersit"
+  - "temp"
+  - "hum"
+  - "atemp"
+  - "windspeed"
+
+# Predictors after feature engineering
+predictors_feng:
+  - "dteday"
+  - "season"
+  - "yr"
+  - "mnth"
+  - "hr"
+  - "holiday"
+  - "weekday"
+  - "workingday"
+  - "weathersit"
+  - "temp"
+  - "hum"
+  - "windspeed"
+
+# Predictors that should be transformed with ohe
+ohe_predictors:
+  - "weekday"
+  - "season"
+  - "weathersit"
+
+# Categirical variable range
+range_weekday:
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+range_weathersit:
+  - 1
+  - 2
+  - 3
+  - 4
+range_season:
+  - 1
+  - 2
+  - 3
+  - 4
+
+# mapping categorical variable
+weekday_map:
+  0: "sunday"
+  1: "monday"
+  2: "tuesday"
+  3: "wednesday"
+  4: "thursday"
+  5: "friday"
+  6: "saturday"
+weathersit_map:
+  1: "clear"
+  2: "mist"
+  3: "light show or rain"
+  4: "heavy rain"
+season_map:
+  1: "winter"
+  2: "spring"
+  3: "summer"
+  4: "fall"
