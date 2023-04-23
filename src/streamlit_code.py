@@ -14,7 +14,7 @@ from streamlit_func import streamlit_mapper
 # binary_map = {0: "no", 1:"yes"}
 
 # Set header
-header_images = Image.open("img/hero_header.jpg")
+header_images = Image.open("img/streamlit_images/hero_header.jpg")
 st.image(header_images)
 
 st.title("Bike Share Prediction")
