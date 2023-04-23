@@ -48,20 +48,6 @@ def home():
 def predict(data: api_data):    
     # Convert data api to dataframe
     data = pd.DataFrame(data).set_index(0).T.reset_index(drop=True)
-
-    # data = pd.concat(
-    #     [
-    #         data[config_data["predictors_feng"][0]],
-    #         data[config_data["predictors_feng"][1:]].astype(int)
-    #     ],
-    #     axis = 1
-    # )   
-
-    # Check range data
-    # try:
-    #     data_pipeline.check_data(data, config_data, True)
-    # except AssertionError as ae:
-    #     return {"res": [], "error_msg": str(ae)}
     
     # Encoding all variables that are needed
     for feature, ohe_model in OHE_MODELS.items():
@@ -76,7 +62,8 @@ def predict(data: api_data):
     y_pred = model_data["model_data"]["model_object"].predict(data)
     
     result = {"res" : float(y_pred), "error_msg": ""}
+
     return result
 
 if __name__ == "__main__":
-    uvicorn.run("api:app", host = "0.0.0.0", port = 8088)
+    uvicorn.run("api:app", host="0.0.0.0", port=8088)
