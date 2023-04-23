@@ -91,7 +91,6 @@ def ohe_fit(feature, data_range) -> OneHotEncoder.fit:
     utils.pickle_dump(ohe_model, dump_filename)
 
     return ohe_model
-    
 
 def ohe_transform(feature, data, ohe_model) -> pd.DataFrame:
     """Creating Ohe Model and Load it to the confguration file
@@ -113,9 +112,6 @@ def ohe_transform(feature, data, ohe_model) -> pd.DataFrame:
         actual data with the transformed feature with OHE
     """
 
-    # Transforming Data
-    range_feature = f"range_{feature}"
-
     # Transforming feature with fitted OHE
     transform_feature = ohe_model.transform(
         np.array(data[feature].to_list()).reshape(-1, 1))
@@ -136,28 +132,32 @@ def ohe_transform(feature, data, ohe_model) -> pd.DataFrame:
     
     return data
 
-if __name__ == "__main__":
-    # 1. Load Configuration File
-    config_data = utils.load_config()
+def ohe_fit_transform(datasets, ohe_predictors) -> tuple:
+    """Execute Ohe Fit and Transform
 
-    # 2. Load Dataset
-    train_set, valid_set, test_set = load_dataset(config_data=config_data)
+    OHE fitting and transforming for necessary features
+    from all sets of data (train, validation and test)
 
-    # 3. Removing outliers on Train Set Data
-    train_set_clean = remove_outliers(set_data=train_set)
+    Parameters
+    ----------
+    datasets : tuple
+        a list of train set, validation set and test set
 
-    # 4. Encode Data
-    # Create list to store the results after data is transformed
-    clean_dataset = []
+    ohe_model : OneHotEncoding.fit()
+        the fitted ohe model for each model
 
-    # Define the feature that should be transformed
-    ohe_predictors = config_data["ohe_predictors"]
+    ohe_predictors : list
+        the list of predictors that should be transformed
 
-    # Put all sets of data (train, valid and test) into tuple
-    # So, it can be iterated
-    datasets = (train_set_clean, valid_set, test_set)
+    Returns
+    -------
+    ohe set : tuple
+        train set, validation and test set that has been transformed
+        with OHE
+    """
 
-    # itrate through dataset and predictors
+    clean_datasets = []
+
     for data in datasets:
         for i, predictor in enumerate(ohe_predictors):
             data_range = config_data[f"range_{predictor}"]
@@ -180,14 +180,40 @@ if __name__ == "__main__":
             ohe_set.rename(config_data[f"{predictor}_map"],
                            axis=1,
                            inplace=True)
-        clean_dataset.append(ohe_set)
+        clean_datasets.append(ohe_set)
+
+    return clean_datasets
+
+if __name__ == "__main__":
+    # 1. Load Configuration File
+    config_data = utils.load_config()
+
+    # 2. Load Dataset
+    train_set, valid_set, test_set = load_dataset(config_data=config_data)
+
+    # 3. Removing outliers on Train Set Data
+    train_set_clean = remove_outliers(set_data=train_set)
+
+    # 4. Encode Data
+    # Create list to store the results after data is transformed
+
+    # Define the feature that should be transformed
+    ohe_predictors = config_data["ohe_predictors"]
+
+    # Put all sets of data (train, valid and test) into tuple
+    # So, it can be iterated
+    datasets = (train_set_clean, valid_set, test_set)
+
+    # itrate through dataset and predictors
+    clean_datasets = ohe_fit_transform(datasets=datasets,
+                                       ohe_predictors=ohe_predictors)
     
     # 5. Dropping 'atemp' Variables on all sets data
-    for data in clean_dataset:
+    for data in clean_datasets:
         data.drop("atemp", axis=1, inplace=True)
 
     # 6. Unpack all of the dataset
-    train_set_clean, valid_set_clean, test_set_clean = clean_dataset
+    train_set_clean, valid_set_clean, test_set_clean = clean_datasets
 
     # 7. Get the current columns
     current_columns = train_set_clean.columns.tolist()
@@ -208,7 +234,6 @@ if __name__ == "__main__":
                       config_data["valid_feng_set_path"][1])
 
     # Dump Test Set Data
-
     utils.pickle_dump(test_set_clean[current_columns],
                       config_data["test_feng_set_path"][0])
     utils.pickle_dump(test_set_clean[config_data["label"]],
