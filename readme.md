@@ -94,7 +94,7 @@ FastAPI will receive the request from Streamlit and then get the best fit Machin
 1. Install Docker for Windows
 2. Clone the Repository
 3. Run this command `docker compose up`
-4. Open Browser type localhost:8051
+4. Open Browser type localhost:8501
 5. Input The Desired Data, refer to the [Streamlit section](#streamlit)
 6. Expeced Output
 ![Expected Output](img/doc_img/Expected_Output.JPG)
@@ -104,7 +104,7 @@ If you don't have docker on your laptop follow this steps
 2. Install the requirement with `python -m pip install requirements.txt`
 3. From the cloned repository, run this command 'streamlit run src/streamlit_code.py'
 4. From the cloned repository, run this command 'python src/api.py'
-5. Open Browser type localhost:8051
+5. Open Browser type localhost:8501
 6. Input The Desired Data, refer to the [Streamlit section](#streamlit)
 7. Expeced Output
 ![Expected Output](img/doc_img/Expected_Output.JPG)
