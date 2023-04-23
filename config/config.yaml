@@ -1,6 +1,6 @@
 # Related Path
-dataset_path: "data/raw/"
-dataset_cleaned_path: "data/processed/raw_dataset.pkl"
+raw_data_set_dir: "data/raw/"
+raw_data_set_path: "data/processed/raw_dataset.pkl"
 train_set_path:
   - "data/processed/x_train.pkl"
   - "data/processed/y_train.pkl"
@@ -33,17 +33,18 @@ float_columns:
   - "atemp"
   - "hum"
   - "windspeed"
+categorical_columns:
+  - "weekday"
+  - "season"
+  - "weathersit"
 int_columns:
   - "dteday"
   - "instant"
-  - "season"
   - "yr"
   - "mnth"
   - "hr"
   - "holiday"
-  - "weekday"
   - "workingday"
-  - "weathersit"
   - "cnt"
 
 # Predictors and label related
@@ -91,9 +92,9 @@ unnecessary_predictors:
   - "instant"
 
 # Dropped predictors due to feature issue
-should_not_use_predictors: "atemp"
+dropped_predictor: "atemp"
 
-# Categirical variable range
+# Categorical variable range
 range_weekday:
   - 0
   - 1
@@ -112,6 +113,38 @@ range_season:
   - 2
   - 3
   - 4
+range_yr:
+  - 0
+  - 1
+range_workingday:
+  - 0
+  - 1
+range_holiday:
+  - 0
+  - 1
+
+# Numerical variable range
+range_temp:
+  - 0.02
+  - 1.0
+range_atemp:
+  - 0.0
+  - 1.0
+range_humidity:
+  - 0.0
+  - 1.0
+range_windspeed:
+  - 0.0
+  - 0.8507
+range_date:
+  - 1
+  - 31
+range_mnth:
+  - 1
+  - 12
+range_hr:
+  - 0
+  - 23
 
 # mapping categorical variable
 weekday_map:
